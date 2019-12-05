@@ -3,7 +3,6 @@
 This is the basic pong game with basic pixel graphics and sound effects.
 
 # Controls
----
  # Player 1
  -Up    w W
  -Down  s S
