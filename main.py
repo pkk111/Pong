@@ -12,21 +12,24 @@ from time import perf_counter
 
 #Game variables
 ball_speed = 0.2
-plank_dist_moved = 20
+plank_dist_moved = 20;
 levelup_time = 2
 bgcolor = "black"
 ball_color = "white"
 plank_color = "green"
-score_color = "orange"
+score_color = "white"
+board_width = 1000
 
 #Score 
 score_a = 0;
 score_b = 0;
 
+board_height = 600
+
 wn = turtle.Screen()
 wn.title("Ping Pong")
 wn.bgcolor(bgcolor)
-wn.setup(width = 800, height = 600)
+wn.setup(width = board_width, height = board_height)
 wn.tracer(0)
 
 #Paddle A
@@ -36,7 +39,7 @@ pad_a.shape("square")
 pad_a.shapesize(stretch_wid=5, stretch_len=1)
 pad_a.color(plank_color)
 pad_a.penup()
-pad_a.goto(-350, 0)
+pad_a.goto(-1*((board_width)/2-50), 0)
 
 #Paddle B
 pad_b = turtle.Turtle()
@@ -45,7 +48,7 @@ pad_b.shape("square")
 pad_b.shapesize(stretch_wid=5, stretch_len=1)
 pad_b.color(plank_color)
 pad_b.penup()
-pad_b.goto(350,0)
+pad_b.goto(((board_width)/2-50),0)
 
 #Ball defining
 ball = turtle.Turtle()
@@ -69,25 +72,25 @@ pen.write("Player A: 0    Player B:0", align="center", font=("Courier",24, "norm
 #Movement functions
 def paddle_a_up():
     y = pad_a.ycor()
-    if y < 250:
+    if y < board_height/2-50:
         y += plank_dist_moved
     pad_a.sety(y)
 
 def paddle_a_down():
     y = pad_a.ycor()
-    if y > -250:
+    if y > -1*(board_height/2-50):
         y -= plank_dist_moved
     pad_a.sety(y)
 
 def paddle_b_up():
     y = pad_b.ycor()
-    if y < 250:
+    if y < board_height/2-50:
         y += plank_dist_moved
     pad_b.sety(y)
 
 def paddle_b_down():
     y = pad_b.ycor()
-    if y > -250:
+    if y > -1*(board_height/2-50):
         y -= plank_dist_moved
     pad_b.sety(y)
 
@@ -142,10 +145,10 @@ while True:
         ball.dy *= -1;
         os.system("aplay bounce_soft.wav&")   #& makes sound playing asyncronous
     
-    if ball.xcor() >= 390 or ball.xcor() <= -390:
+    if ball.xcor() >= board_width/2-10 or ball.xcor() <= -1*(board_width/2-10):
         ball.dx *= -1;
         pen.clear()
-        if ball.xcor() >= 390:
+        if ball.xcor() >= board_width/2-10:
             score_a += 1
             pen.write("Player A: {}    Player B: {}".format(score_a, score_b), align="center", font=("Courier",24, "normal"))
         else:
@@ -156,12 +159,12 @@ while True:
         ball.dy = ball_speed
         os.system("aplay Robot_blip.wav&")   #& makes sound playing asyncronous
     
-    if (ball.xcor() > 330 and ball.xcor() < 340) and (ball.ycor() < pad_b.ycor()+50 and ball.ycor() > pad_b.ycor()-50):
-        ball.setx(330)
+    if (ball.xcor() > board_width/2-70 and ball.xcor() < board_width/2-60) and (ball.ycor() < pad_b.ycor()+50 and ball.ycor() > pad_b.ycor()-50):
+        ball.setx(board_width/2-70)
         ball.dx *= -1
         os.system("aplay bounce_hard.wav&")   #& makes sound playing asyncronous
     
-    if (ball.xcor() < -330 and ball.xcor() > -340) and (ball.ycor() < pad_a.ycor()+50 and ball.ycor() > pad_a.ycor()-50):
-        ball.setx(-330)
+    if (ball.xcor() < -1*(board_width/2-70) and ball.xcor() > -1*(board_width/2-60)) and (ball.ycor() < pad_a.ycor()+50 and ball.ycor() > pad_a.ycor()-50):
+        ball.setx(-1*(board_width/2-10))
         ball.dx *= -1
         os.system("aplay bounce_hard.wav&")   #& makes sound playing asyncronous
